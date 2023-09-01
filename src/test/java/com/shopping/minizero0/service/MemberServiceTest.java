@@ -2,6 +2,7 @@ package com.shopping.minizero0.service;
 
 import com.shopping.minizero0.entity.Member;
 import dto.MemberFormDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
+@Transactional      //테스트 클래스에서 Transactional 사용하면 테스트 실행 후 롤백 처리
 @TestPropertySource(locations = "classpath:application-test.properties")
 class MemberServiceTest {
 
@@ -22,6 +23,7 @@ class MemberServiceTest {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
 
     public Member createMember() {
         MemberFormDto memberFormDto = new MemberFormDto();
@@ -43,5 +45,21 @@ class MemberServiceTest {
         assertEquals(member.getAddress(), savedMember.getAddress());
         assertEquals(member.getPassword(), savedMember.getPassword());
         assertEquals(member.getRole(), savedMember.getRole());
+    }
+
+    @Test
+    @DisplayName("중복 회원 테스트")
+    public void saveDuplicateMemberTest() {
+        Member member1 = createMember();
+        Member member2 = createMember();
+
+        memberService.saveMember(member1);
+
+        Throwable e = assertThrows(IllegalStateException.class, () -> {
+            memberService.saveMember(member2);
+        });
+
+        assertEquals("이미 가입된 회원 입니다.", e.getMessage());
+
     }
 }
