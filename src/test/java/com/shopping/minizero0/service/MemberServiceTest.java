@@ -1,8 +1,7 @@
 package com.shopping.minizero0.service;
 
 import com.shopping.minizero0.entity.Member;
-import dto.MemberFormDto;
-import org.junit.jupiter.api.AfterEach;
+import com.shopping.minizero0.dto.MemberFormDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

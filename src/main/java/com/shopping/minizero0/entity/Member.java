@@ -1,7 +1,7 @@
 package com.shopping.minizero0.entity;
 
 import com.shopping.minizero0.constant.Role;
-import dto.MemberFormDto;
+import com.shopping.minizero0.dto.MemberFormDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
